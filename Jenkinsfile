@@ -76,17 +76,17 @@ pipeline {
                 bat '''
                     @echo off
                     REM Print Python version
-                    python --version
+                    py --version
                     
                     REM Create virtual environment for isolation
                     REM (Best practice for CI/CD: ensures clean environment)
-                    python -m venv venv
+                    py -m venv venv
                     
                     REM Activate virtual environment
                     call venv/Scripts/activate.bat
                     
                     REM Upgrade pip
-                    python -m pip install --upgrade pip
+                    py -m pip install --upgrade pip
                     
                     REM Install project dependencies
                     REM For automotive testing, common tools include:
@@ -121,10 +121,10 @@ pipeline {
                     echo.
                     
                     REM Run tests with verbose output and generate XML report for Jenkins
-                    python -m pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
+                    py -m pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
                     
                     REM Alternative: Run with unittest directly
-                    python test_helloworld.py
+                    py test_helloworld.py
                 '''
             }
             
@@ -204,7 +204,7 @@ pipeline {
                     echo.
                     
                     REM Run test report script
-                    python test_helloworld.py
+                    py test_helloworld.py
                     
                     echo.
                     echo Test Results:
