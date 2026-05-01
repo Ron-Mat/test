@@ -73,28 +73,29 @@ pipeline {
         stage('Setup Environment') {
             steps {
                 echo "========== SETUP ENVIRONMENT =========="
-                sh '''
-                    # Print Python version
-                    python3 --version
+                bat '''
+                    @echo off
+                    REM Print Python version
+                    python --version
                     
-                    # Create virtual environment for isolation
-                    # (Best practice for CI/CD: ensures clean environment)
-                    python3 -m venv venv || virtualenv venv
+                    REM Create virtual environment for isolation
+                    REM (Best practice for CI/CD: ensures clean environment)
+                    python -m venv venv
                     
-                    # Activate virtual environment
-                    . venv/bin/activate
+                    REM Activate virtual environment
+                    call venv\Scripts\activate.bat
                     
-                    # Upgrade pip
-                    pip install --upgrade pip
+                    REM Upgrade pip
+                    python -m pip install --upgrade pip
                     
-                    # Install project dependencies
-                    # For automotive testing, common tools include:
-                    # - unittest: Built-in JUnit-style framework
-                    # - pytest: Extended testing framework
-                    # - coverage: Code coverage measurement
+                    REM Install project dependencies
+                    REM For automotive testing, common tools include:
+                    REM - unittest: Built-in JUnit-style framework
+                    REM - pytest: Extended testing framework
+                    REM - coverage: Code coverage measurement
                     pip install pytest pytest-cov coverage
                     
-                    echo "✓ Environment setup complete"
+                    echo ✓ Environment setup complete
                 '''
             }
         }
@@ -104,26 +105,26 @@ pipeline {
                 echo "========== UNIT TESTS STAGE =========="
                 
                 // Create test results directory
-                sh 'mkdir -p ${TEST_RESULTS_DIR}'
+                bat 'if not exist %TEST_RESULTS_DIR% mkdir %TEST_RESULTS_DIR%'
                 
                 // Run Python unit tests
-                sh '''
-                    . venv/bin/activate
+                bat '''
+                    call venv\Scripts\activate.bat
                     
-                    echo "Running unit tests from test_helloworld.py..."
-                    echo "This includes:"
-                    echo "  - Engine Control Tests"
-                    echo "  - Speed Control Tests"
-                    echo "  - Diagnostics Tests"
-                    echo "  - Integration Scenarios"
-                    echo "  - Performance Metrics"
-                    echo ""
+                    echo Running unit tests from test_helloworld.py...
+                    echo This includes:
+                    echo   - Engine Control Tests
+                    echo   - Speed Control Tests
+                    echo   - Diagnostics Tests
+                    echo   - Integration Scenarios
+                    echo   - Performance Metrics
+                    echo.
                     
-                    # Run tests with verbose output and generate XML report for Jenkins
-                    python3 -m pytest test_helloworld.py -v --junitxml=${TEST_RESULTS_DIR}/junit.xml --html=${TEST_RESULTS_DIR}/report.html || true
+                    REM Run tests with verbose output and generate XML report for Jenkins
+                    python -m pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
                     
-                    # Alternative: Run with unittest directly
-                    python3 test_helloworld.py
+                    REM Alternative: Run with unittest directly
+                    python test_helloworld.py
                 '''
             }
             
@@ -145,23 +146,23 @@ pipeline {
         stage('Code Coverage') {
             steps {
                 echo "========== CODE COVERAGE STAGE =========="
-                sh '''
-                    . venv/bin/activate
+                bat '''
+                    call venv\Scripts\activate.bat
                     
-                    echo "Measuring code coverage..."
-                    echo "Target: ${COVERAGE_THRESHOLD}% coverage"
-                    echo ""
+                    echo Measuring code coverage...
+                    echo Target: %COVERAGE_THRESHOLD% coverage
+                    echo.
                     
-                    # Run tests with coverage measurement
-                    coverage run --source=. -m pytest test_helloworld.py || true
+                    REM Run tests with coverage measurement
+                    coverage run --source=. -m pytest test_helloworld.py || echo "Coverage run failed"
                     
-                    # Generate coverage report
-                    coverage report --fail-under=${COVERAGE_THRESHOLD} || echo "⚠ Coverage below target (${COVERAGE_THRESHOLD}%)"
+                    REM Generate coverage report
+                    coverage report --fail-under=%COVERAGE_THRESHOLD% || echo ⚠ Coverage below target (%COVERAGE_THRESHOLD%)
                     
-                    # Generate HTML coverage report
-                    coverage html -d ${TEST_RESULTS_DIR}/coverage || true
+                    REM Generate HTML coverage report
+                    coverage html -d %TEST_RESULTS_DIR%/coverage || echo "HTML coverage failed"
                     
-                    echo "✓ Coverage report generated: ${TEST_RESULTS_DIR}/coverage/index.html"
+                    echo ✓ Coverage report generated: %TEST_RESULTS_DIR%/coverage/index.html
                 '''
             }
         }
@@ -169,19 +170,19 @@ pipeline {
         stage('Code Quality Analysis') {
             steps {
                 echo "========== CODE QUALITY STAGE =========="
-                sh '''
-                    . venv/bin/activate
+                bat '''
+                    call venv\Scripts\activate.bat
                     
-                    echo "Running basic code quality checks..."
+                    echo Running basic code quality checks...
                     
-                    # Install pylint or flake8
-                    pip install pylint flake8 || true
+                    REM Install pylint or flake8
+                    pip install pylint flake8 || echo "Install failed"
                     
-                    # Run flake8 for style checks
-                    echo "Checking code style with flake8..."
-                    flake8 helloworld.py test_helloworld.py test_helpers.py --max-line-length=100 || true
+                    REM Run flake8 for style checks
+                    echo Checking code style with flake8...
+                    flake8 helloworld.py test_helloworld.py test_helpers.py --max-line-length=100 || echo "Flake8 failed"
                     
-                    echo "✓ Code quality analysis complete"
+                    echo ✓ Code quality analysis complete
                 '''
             }
         }
@@ -189,29 +190,29 @@ pipeline {
         stage('Test Reporting') {
             steps {
                 echo "========== TEST REPORTING STAGE =========="
-                sh '''
-                    . venv/bin/activate
+                bat '''
+                    call venv\Scripts\activate.bat
                     
-                    echo ""
-                    echo "╔════════════════════════════════════════════╗"
-                    echo "║    AUTOMOTIVE SOFTWARE TEST REPORT         ║"
-                    echo "╚════════════════════════════════════════════╝"
-                    echo ""
-                    echo "Project: ${PROJECT_NAME}"
-                    echo "Build #: ${BUILD_NUMBER}"
-                    echo "Date: $(date)"
-                    echo ""
+                    echo.
+                    echo ╔════════════════════════════════════════════╗
+                    echo ║    AUTOMOTIVE SOFTWARE TEST REPORT         ║
+                    echo ╚════════════════════════════════════════════╝
+                    echo.
+                    echo Project: %PROJECT_NAME%
+                    echo Build #: %BUILD_NUMBER%
+                    echo Date: %DATE%
+                    echo.
                     
-                    # Run test report script
-                    python3 test_helloworld.py 2>&1 | tail -20
+                    REM Run test report script
+                    python test_helloworld.py
                     
-                    echo ""
-                    echo "Test Results:"
-                    echo "  - Unit Tests: PASSED"
-                    echo "  - Integration Tests: PASSED"
-                    echo "  - Code Coverage: See ${TEST_RESULTS_DIR}/coverage/index.html"
-                    echo ""
-                    echo "✓ All reports generated"
+                    echo.
+                    echo Test Results:
+                    echo   - Unit Tests: PASSED
+                    echo   - Integration Tests: PASSED
+                    echo   - Code Coverage: See %TEST_RESULTS_DIR%/coverage/index.html
+                    echo.
+                    echo ✓ All reports generated
                 '''
             }
         }
@@ -219,15 +220,15 @@ pipeline {
         stage('Build Artifact') {
             steps {
                 echo "========== BUILD ARTIFACT STAGE =========="
-                sh '''
-                    echo "Creating build artifact..."
+                bat '''
+                    echo Creating build artifact...
                     
-                    # In real scenario, would package for deployment
-                    # Example: Python wheel, Docker image, etc.
-                    mkdir -p dist
-                    echo "Build artifact ready in dist/ directory"
+                    REM In real scenario, would package for deployment
+                    REM Example: Python wheel, Docker image, etc.
+                    if not exist dist mkdir dist
+                    echo Build artifact ready in dist/ directory
                     
-                    echo "✓ Build artifact created"
+                    echo ✓ Build artifact created
                 '''
             }
         }
