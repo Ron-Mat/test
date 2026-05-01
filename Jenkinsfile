@@ -76,17 +76,17 @@ pipeline {
                 bat '''
                     @echo off
                     REM Print Python version
-                    "C:\Users\ron_k\AppData\Local\Microsoft\WindowsApps\python.exe" --version
+                    "C:/Users/ron_k/AppData/Local/Microsoft/WindowsApps/python.exe" --version
                     
                     REM Create virtual environment for isolation
                     REM (Best practice for CI/CD: ensures clean environment)
-                    "C:\Users\ron_k\AppData\Local\Microsoft\WindowsApps\python.exe" -m venv venv
+                    "C:/Users/ron_k/AppData/Local/Microsoft/WindowsApps/python.exe" -m venv venv
                     
                     REM Activate virtual environment
                     call venv/Scripts/activate.bat
                     
                     REM Upgrade pip
-                    "C:\Users\ron_k\AppData\Local\Microsoft\WindowsApps\python.exe" -m pip install --upgrade pip
+                    "C:/Users/ron_k/AppData/Local/Microsoft/WindowsApps/python.exe" -m pip install --upgrade pip
                     
                     REM Install project dependencies
                     REM For automotive testing, common tools include:
@@ -121,10 +121,10 @@ pipeline {
                     echo.
                     
                     REM Run tests with verbose output and generate XML report for Jenkins
-                    "C:\Users\ron_k\AppData\Local\Microsoft\WindowsApps\python.exe" -m pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
+                    "C:/Users/ron_k/AppData/Local/Microsoft/WindowsApps/python.exe" -m pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
                     
                     REM Alternative: Run with unittest directly
-                    "C:\Users\ron_k\AppData\Local\Microsoft\WindowsApps\python.exe" test_helloworld.py
+                    "C:/Users/ron_k/AppData/Local/Microsoft/WindowsApps/python.exe" test_helloworld.py
                 '''
             }
             
@@ -204,7 +204,7 @@ pipeline {
                     echo.
                     
                     REM Run test report script
-                    "C:\Users\ron_k\AppData\Local\Microsoft\WindowsApps\python.exe" test_helloworld.py
+                    "C:/Users/ron_k/AppData/Local/Microsoft/WindowsApps/python.exe" test_helloworld.py
                     
                     echo.
                     echo Test Results:
