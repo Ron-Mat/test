@@ -83,7 +83,7 @@ pipeline {
                     python -m venv venv
                     
                     REM Activate virtual environment
-                    call venv\Scripts\activate.bat
+                    call venv/Scripts/activate.bat
                     
                     REM Upgrade pip
                     python -m pip install --upgrade pip
@@ -109,7 +109,7 @@ pipeline {
                 
                 // Run Python unit tests
                 bat '''
-                    call venv\Scripts\activate.bat
+                    call venv/Scripts/activate.bat
                     
                     echo Running unit tests from test_helloworld.py...
                     echo This includes:
@@ -147,7 +147,7 @@ pipeline {
             steps {
                 echo "========== CODE COVERAGE STAGE =========="
                 bat '''
-                    call venv\Scripts\activate.bat
+                    call venv/Scripts/activate.bat
                     
                     echo Measuring code coverage...
                     echo Target: %COVERAGE_THRESHOLD% coverage
@@ -171,7 +171,7 @@ pipeline {
             steps {
                 echo "========== CODE QUALITY STAGE =========="
                 bat '''
-                    call venv\Scripts\activate.bat
+                    call venv/Scripts/activate.bat
                     
                     echo Running basic code quality checks...
                     
@@ -191,7 +191,7 @@ pipeline {
             steps {
                 echo "========== TEST REPORTING STAGE =========="
                 bat '''
-                    call venv\Scripts\activate.bat
+                    call venv/Scripts/activate.bat
                     
                     echo.
                     echo ╔════════════════════════════════════════════╗
