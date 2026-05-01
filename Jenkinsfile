@@ -121,7 +121,7 @@ pipeline {
                     echo.
                     
                     REM Run tests with verbose output and generate XML report for Jenkins
-                    pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
+                    pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml || echo "Tests failed"
                     
                     REM Alternative: Run with unittest directly
                     python test_helloworld.py
