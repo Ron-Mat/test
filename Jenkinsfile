@@ -121,10 +121,10 @@ pipeline {
                     echo.
                     
                     REM Run tests with verbose output and generate XML report for Jenkins
-                    "C:/Program Files/Python39/python.exe" -m pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
+                    pytest test_helloworld.py -v --junitxml=%TEST_RESULTS_DIR%/junit.xml --html=%TEST_RESULTS_DIR%/report.html || echo "Tests failed"
                     
                     REM Alternative: Run with unittest directly
-                    "C:/Program Files/Python39/python.exe" test_helloworld.py
+                    python test_helloworld.py
                 '''
             }
             
@@ -204,7 +204,7 @@ pipeline {
                     echo.
                     
                     REM Run test report script
-                    "C:/Program Files/Python39/python.exe" test_helloworld.py
+                    python test_helloworld.py
                     
                     echo.
                     echo Test Results:
