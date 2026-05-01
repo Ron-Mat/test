@@ -1,0 +1,30 @@
+# Automotive Software Testing - Project Dependencies
+#
+# These packages are required for running the test suite and CI/CD pipeline
+# Installation: pip install -r requirements.txt
+
+# Testing Frameworks
+# Core unit testing framework (built-in, listed for reference)
+# unittest (Python standard library)
+
+# Extended testing framework with better reporting
+pytest==7.4.0
+pytest-cov==4.1.0
+
+# Code coverage measurement
+coverage==7.2.0
+
+# Code quality and style checking
+pylint==2.17.0
+flake8==6.0.0
+
+# Optional: For additional testing features
+# pytest-html==3.2.0          # HTML test reports
+# pytest-timeout==2.1.0       # Timeout support for tests
+# pytest-xdist==3.3.1         # Parallel test execution
+
+# Notes:
+# - These versions are current as of 2024
+# - Update versions periodically for bug fixes and features
+# - For production use, pin exact versions
+# - Development tools (pylint, flake8) can be in separate requirements-dev.txt
