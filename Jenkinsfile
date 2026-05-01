@@ -103,10 +103,10 @@ pipeline {
             steps {
                 echo "========== UNIT TESTS STAGE =========="
                 
-                # Create test results directory
+                // Create test results directory
                 sh 'mkdir -p ${TEST_RESULTS_DIR}'
                 
-                # Run Python unit tests
+                // Run Python unit tests
                 sh '''
                     . venv/bin/activate
                     
