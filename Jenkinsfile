@@ -57,7 +57,6 @@ pipeline {
     
     stages {
         stage('Checkout') {
-            description 'Pull latest code from GitHub repository'
             steps {
                 echo "========== CHECKOUT STAGE =========="
                 checkout(
@@ -72,7 +71,6 @@ pipeline {
         }
         
         stage('Setup Environment') {
-            description 'Setup Python environment and install dependencies'
             steps {
                 echo "========== SETUP ENVIRONMENT =========="
                 sh '''
@@ -102,14 +100,13 @@ pipeline {
         }
         
         stage('Unit Tests') {
-            description 'Run unit tests with JUnit reporting'
             steps {
                 echo "========== UNIT TESTS STAGE =========="
                 
-                // Create test results directory
+                # Create test results directory
                 sh 'mkdir -p ${TEST_RESULTS_DIR}'
                 
-                // Run Python unit tests
+                # Run Python unit tests
                 sh '''
                     . venv/bin/activate
                     
@@ -146,7 +143,6 @@ pipeline {
         }
         
         stage('Code Coverage') {
-            description 'Measure code coverage to verify test quality'
             steps {
                 echo "========== CODE COVERAGE STAGE =========="
                 sh '''
@@ -171,7 +167,6 @@ pipeline {
         }
         
         stage('Code Quality Analysis') {
-            description 'Analyze code for quality issues (optional)'
             steps {
                 echo "========== CODE QUALITY STAGE =========="
                 sh '''
@@ -192,7 +187,6 @@ pipeline {
         }
         
         stage('Test Reporting') {
-            description 'Generate and report test metrics'
             steps {
                 echo "========== TEST REPORTING STAGE =========="
                 sh '''
@@ -223,7 +217,6 @@ pipeline {
         }
         
         stage('Build Artifact') {
-            description 'Create deployable artifact'
             steps {
                 echo "========== BUILD ARTIFACT STAGE =========="
                 sh '''
