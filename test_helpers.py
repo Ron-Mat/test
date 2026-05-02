@@ -28,6 +28,7 @@ from typing import Dict, Any
 
 from helloworld import VehicleController
 
+
 class TestHelper:
 
     """
@@ -245,6 +246,7 @@ class TestHelper:
 
         self.test_start_time = None
 
+
 def analyze_test_results(summary: Dict[str, Any]) -> str:
 
     """
@@ -280,6 +282,7 @@ def analyze_test_results(summary: Dict[str, Any]) -> str:
     else:
 
         return "✗ Critical failures - Fix required before proceeding"
+
 
 def setup_automotive_test_scenario(scenario_type: str) -> Dict[str, Any]:
 

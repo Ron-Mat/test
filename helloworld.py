@@ -134,6 +134,7 @@ class VehicleController:
 
         self.fault_codes.clear()
 
+
 # Example usage demonstrating the module
 
 if __name__ == "__main__":

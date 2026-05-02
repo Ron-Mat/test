@@ -30,6 +30,7 @@ from helloworld import VehicleController
 
 from test_helpers import TestHelper, analyze_test_results, setup_automotive_test_scenario
 
+
 class TestVehicleEngineControl(unittest.TestCase):
 
     """
@@ -111,6 +112,7 @@ class TestVehicleEngineControl(unittest.TestCase):
         self.vehicle.clear_faults()
 
         self.assertEqual(len(self.vehicle.fault_codes), 0)
+
 
 class TestVehicleSpeedControl(unittest.TestCase):
 
@@ -226,6 +228,7 @@ class TestVehicleSpeedControl(unittest.TestCase):
 
         )
 
+
 class TestVehicleDiagnostics(unittest.TestCase):
 
     """
@@ -306,6 +309,7 @@ class TestVehicleDiagnostics(unittest.TestCase):
         self.assertFalse(diag["system_ready"],
 
                         "System should not be ready with active faults")
+
 
 class TestIntegrationScenarios(unittest.TestCase):
 
@@ -471,15 +475,13 @@ class TestPerformanceAndMetrics(unittest.TestCase):
 
         vehicle.accelerate(100)
 
-        diag = vehicle.run_diagnostics()
-
         elapsed = self.helper.end_test_timer()
 
         # Performance metric: Tests should run quickly (< 1 second)
 
         self.assertLess(elapsed, 1.0,
 
-                       f"Test execution too slow: {elapsed:.3f}s (should be < 1.0s)")
+                        f"Test execution too slow: {elapsed:.3f}s (should be < 1.0s)")
 
     def test_result_analysis(self):
 
