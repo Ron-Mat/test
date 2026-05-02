@@ -270,39 +270,14 @@ pipeline {
                     echo   - Qualification HTML Report: %TEST_RESULTS_DIR%/qualification-test-report.html
                     echo   - Code Coverage: See %TEST_RESULTS_DIR%/coverage/index.html
                     echo.
+                    python scripts/generate_ci_reports.py --results-dir %TEST_RESULTS_DIR% --project %PROJECT_NAME% --build %BUILD_NUMBER%
+                    echo   - Static Report Index: %TEST_RESULTS_DIR%/report-index.html
+                    echo   - Static SWE4 Summary: %TEST_RESULTS_DIR%/unit-summary.html
+                    echo   - Static SWE5 Summary: %TEST_RESULTS_DIR%/integration-summary.html
+                    echo   - Static SWE6 Summary: %TEST_RESULTS_DIR%/qualification-summary.html
+                    echo.
                     echo ✓ All reports generated
                 '''
-
-                writeFile(
-                    file: "${env.TEST_RESULTS_DIR}/report-index.html",
-                    text: """<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>${env.PROJECT_NAME} Build ${env.BUILD_NUMBER} Reports</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin: 2rem; line-height: 1.5; color: #1f2933; }
-    h1 { margin-bottom: 0.25rem; }
-    .meta { color: #52606d; margin-bottom: 1.5rem; }
-    li { margin: 0.4rem 0; }
-  </style>
-</head>
-<body>
-  <h1>${env.PROJECT_NAME} Reports</h1>
-  <div class="meta">Build ${env.BUILD_NUMBER}</div>
-  <ul>
-    <li><a href="unit-test-report.html">Unit Test HTML Report</a></li>
-    <li><a href="integration-test-report.html">Integration Test HTML Report</a></li>
-    <li><a href="qualification-test-report.html">Qualification Test HTML Report</a></li>
-    <li><a href="coverage/index.html">Coverage HTML Report</a></li>
-    <li><a href="junit.xml">Unit JUnit XML</a></li>
-    <li><a href="integration-junit.xml">Integration JUnit XML</a></li>
-    <li><a href="qualification-junit.xml">Qualification JUnit XML</a></li>
-  </ul>
-</body>
-</html>
-"""
-                )
             }
         }
 
@@ -400,11 +375,11 @@ pipeline {
                 def baseUrl = env.BUILD_URL ?: ''
                 def covLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/coverage/index.html"
                 def reportLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/report-index.html"
-                def unitLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/junit.xml"
-                def integLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/integration-junit.xml"
-                def qualLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/qualification-junit.xml"
+                def unitLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/unit-summary.html"
+                def integLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/integration-summary.html"
+                def qualLink = "${baseUrl}artifact/${env.TEST_RESULTS_DIR}/qualification-summary.html"
 
-                currentBuild.description = "<a href='${reportLink}'>Report Index</a> | <a href='${covLink}'>Coverage Report</a> | <a href='${unitLink}'>Unit Results</a> | <a href='${integLink}'>Integration Results</a> | <a href='${qualLink}'>Qualification Results</a>"
+                currentBuild.description = "<a href='${reportLink}'>Report Index</a> | <a href='${unitLink}'>SWE4 Unit</a> | <a href='${integLink}'>SWE5 Integration</a> | <a href='${qualLink}'>SWE6 Qualification</a> | <a href='${covLink}'>Coverage</a>"
             }
         }
 

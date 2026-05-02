@@ -102,6 +102,9 @@ The Jenkins pipeline follows this sequence:
 Expected Jenkins artifacts include:
 
 - `test-results/report-index.html`
+- `test-results/unit-summary.html`
+- `test-results/integration-summary.html`
+- `test-results/qualification-summary.html`
 - `test-results/unit-test-report.html`
 - `test-results/integration-test-report.html`
 - `test-results/qualification-test-report.html`
@@ -110,6 +113,8 @@ Expected Jenkins artifacts include:
 - `test-results/integration-junit.xml`
 - `test-results/qualification-junit.xml`
 - `dist/package/artifact.zip`
+
+The `*-summary.html` files are static Jenkins-friendly reports generated from JUnit XML. They are usually better for archived Jenkins viewing than pytest-html because they do not depend on JavaScript.
 
 ## Run Locally
 

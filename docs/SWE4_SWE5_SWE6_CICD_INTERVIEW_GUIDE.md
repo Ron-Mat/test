@@ -196,7 +196,7 @@ A: The pipeline checks out code, sets up Python, runs unit tests, measures cover
 
 **Q: What artifacts does the pipeline produce?**
 
-A: It produces JUnit XML, HTML test reports, a coverage HTML report, a report index, and a packaged deployment artifact.
+A: It produces JUnit XML, Jenkins-friendly static HTML summaries, pytest-html reports, a coverage HTML report, a report index, and a packaged deployment artifact.
 
 **Q: Why use JUnit XML for Python tests?**
 
@@ -204,7 +204,7 @@ A: Jenkins understands JUnit XML as a standard test result format. Even when tes
 
 **Q: Why create HTML reports?**
 
-A: HTML reports are easier for humans to review. JUnit XML is useful for Jenkins parsing, while HTML gives readable detail for engineers, leads, and release reviewers.
+A: HTML reports are easier for humans to review. JUnit XML is useful for Jenkins parsing, while static HTML gives readable detail for engineers, leads, and release reviewers. In this project, the static summaries are generated from JUnit XML so Jenkins artifact viewing does not depend on pytest-html JavaScript.
 
 **Q: What is a quality gate?**
 
