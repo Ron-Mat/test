@@ -275,17 +275,17 @@ pipeline {
     post {
         always {
             echo "========== POST-BUILD ACTIONS =========="
-            
-            // Archive test results and reports
+
+            // Archive test results, coverage and build artifacts
             archiveArtifacts(
-                artifacts: '${TEST_RESULTS_DIR}/**/*',
-                allowEmptyArchive: true
+                artifacts: "${env.TEST_RESULTS_DIR}/**/*, dist/**",
+                allowEmptyArchive: false
             )
             
             // Clean up workspace
             cleanWs(
                 deleteDirs: true,
-                patterns: [[pattern: '${TEST_RESULTS_DIR}/**', type: 'INCLUDE']]
+                patterns: [[pattern: "${env.TEST_RESULTS_DIR}/**", type: 'INCLUDE']]
             )
         }
         
