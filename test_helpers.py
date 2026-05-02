@@ -135,6 +135,7 @@ class TestHelper:
         self.execution_time = 0
         self.test_start_time = None
 
+
 def analyze_test_results(summary: Dict[str, Any]) -> str:
     """
     Analyze test results and provide insights.
@@ -153,6 +154,7 @@ def analyze_test_results(summary: Dict[str, Any]) -> str:
         return "⚠ Minor failures detected - Review before deployment"
     else:
         return "✗ Critical failures - Fix required before proceeding"
+
 
 def setup_automotive_test_scenario(scenario_type: str) -> Dict[str, Any]:
     """
