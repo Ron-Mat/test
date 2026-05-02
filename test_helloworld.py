@@ -25,14 +25,11 @@ Test Categories:
 """
 
 import unittest
-
 from helloworld import VehicleController
-
 from test_helpers import TestHelper, analyze_test_results, setup_automotive_test_scenario
 
 
 class TestVehicleEngineControl(unittest.TestCase):
-
     """
 
     Test Suite: Engine Control Functions
@@ -42,7 +39,6 @@ class TestVehicleEngineControl(unittest.TestCase):
     under various conditions (normal, fault states, etc.)
 
     """
-
     def setUp(self):
 
         """
@@ -115,7 +111,6 @@ class TestVehicleEngineControl(unittest.TestCase):
 
 
 class TestVehicleSpeedControl(unittest.TestCase):
-
     """
 
     Test Suite: Speed Control Functions
@@ -131,7 +126,6 @@ class TestVehicleSpeedControl(unittest.TestCase):
     - Emergency stop scenarios
 
     """
-
     def setUp(self):
 
         """Setup vehicle for speed testing."""
@@ -187,14 +181,12 @@ class TestVehicleSpeedControl(unittest.TestCase):
         self.vehicle.accelerate(100)  # Try to go 250, but max is 200
 
         self.assertLessEqual(
-            self.vehicle.current_speed, self.vehicle.max_speed,
+            self.vehicle.current_speed, 
+            self.vehicle.max_speed, 
             "Speed should never exceed max_speed limit"
         )
 
-        self.assertEqual(
-            self.vehicle.current_speed, 200,
-            "Speed should be clamped to max_speed (200)"
-        )
+        self.assertEqual(self.vehicle.current_speed, 200, "Speed should be clamped to max_speed (200)")
 
     def test_incremental_acceleration_sequence(self):
 
@@ -290,7 +282,7 @@ class TestVehicleDiagnostics(unittest.TestCase):
         result = self.vehicle.run_diagnostics()
 
         self.assertTrue(
-            result["speed_valid"],
+            result["speed_valid"], 
             "Speed should be valid (within 0 to max_speed bounds)"
         )
 
@@ -308,17 +300,16 @@ class TestVehicleDiagnostics(unittest.TestCase):
 
         self.vehicle.add_fault_code("P0100")
 
-        diag = self.vehicle.run_diagnostics()
+        self.assertEqual(self.vehicle.run_diagnostics()["fault_count"], 1)
 
-        self.assertEqual(diag["fault_count"], 1)
+        self.assertFalse(
+            self.vehicle.run_diagnostics()["system_ready"], 
+            "System should not be ready with active faults"
+        )
 
-        self.assertFalse(diag["system_ready"],
-
-                        "System should not be ready with active faults")
 
 
 class TestIntegrationScenarios(unittest.TestCase):
-
     """
 
     Integration Test Suite: Complete Vehicle Operation Scenarios
@@ -330,7 +321,6 @@ class TestIntegrationScenarios(unittest.TestCase):
     integration of software and virtualized hardware components."
 
     """
-
     def setUp(self):
 
         """Setup for integration testing."""
@@ -435,8 +425,8 @@ class TestIntegrationScenarios(unittest.TestCase):
         self.assertTrue(start_result, "Engine should start after fault cleared")
 
 
-class TestPerformanceAndMetrics(unittest.TestCase):
 
+class TestPerformanceAndMetrics(unittest.TestCase):
     """
 
     Test Suite: Performance Metrics and Quality Measures
@@ -448,7 +438,6 @@ class TestPerformanceAndMetrics(unittest.TestCase):
     These tests verify that the system meets performance requirements.
 
     """
-
     def setUp(self):
 
         """Setup for performance testing."""
@@ -518,12 +507,11 @@ class TestPerformanceAndMetrics(unittest.TestCase):
 
         self.assertIn("PASSED", analysis)
 
+
+
 # Script to run tests with reporting
-
 if __name__ == "__main__":
-
     # Create test suite
-
     loader = unittest.TestLoader()
 
     suite = unittest.TestSuite()

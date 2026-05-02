@@ -247,8 +247,8 @@ class TestHelper:
         self.test_start_time = None
 
 
-def analyze_test_results(summary: Dict[str, Any]) -> str:
 
+def analyze_test_results(summary: Dict[str, Any]) -> str:
     """
 
     Analyze test results and provide insights.
@@ -266,26 +266,19 @@ def analyze_test_results(summary: Dict[str, Any]) -> str:
         str: Analysis of test results
 
     """
-
     failed = summary.get("failed", 0)
-
     total = summary.get("total_tests", 0)
 
     if failed == 0:
-
         return "✓ All tests PASSED - System ready for deployment"
-
     elif failed < total * 0.1:
-
         return "⚠ Minor failures detected - Review before deployment"
-
     else:
-
         return "✗ Critical failures - Fix required before proceeding"
 
 
-def setup_automotive_test_scenario(scenario_type: str) -> Dict[str, Any]:
 
+def setup_automotive_test_scenario(scenario_type: str) -> Dict[str, Any]:
     """
 
     Setup predefined test scenarios for automotive systems.
@@ -305,45 +298,24 @@ def setup_automotive_test_scenario(scenario_type: str) -> Dict[str, Any]:
         dict: Test scenario parameters
 
     """
-
     scenarios = {
-
         "normal": {
-
             "vehicle_id": "TEST_NORMAL_001",
-
             "max_speed": 200,
-
             "test_acceleration": [10, 20, 30],
-
             "expected_diagnostics": "OK"
-
         },
-
         "fault": {
-
             "vehicle_id": "TEST_FAULT_001",
-
             "max_speed": 150,  # Reduced due to fault
-
             "test_acceleration": [10],
-
             "expected_diagnostics": "FAULT_DETECTED"
-
         },
-
         "edge_case": {
-
             "vehicle_id": "TEST_EDGE_001",
-
             "max_speed": 250,  # Edge: High speed
-
             "test_acceleration": [50, 100],  # Edge: Large accelerations
-
             "expected_diagnostics": "OK"
-
         }
-
     }
-
     return scenarios.get(scenario_type, scenarios["normal"])
