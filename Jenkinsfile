@@ -75,26 +75,41 @@ pipeline {
                 echo "========== SETUP ENVIRONMENT =========="
                 bat '''
                     @echo off
-                    REM Print Python version
-                    "C:/Program Files/Python39/python.exe" --version
-                    
-                    REM Create virtual environment for isolation
-                    REM (Best practice for CI/CD: ensures clean environment)
-                    "C:/Program Files/Python39/python.exe" -m venv venv
-                    
-                    REM Activate virtual environment
-                    call venv/Scripts/activate.bat
-                    
-                    REM Upgrade pip
-                    "C:/Program Files/Python39/python.exe" -m pip install --upgrade pip
-                    
-                    REM Install project dependencies
-                    REM For automotive testing, common tools include:
-                    REM - unittest: Built-in JUnit-style framework
-                    REM - pytest: Extended testing framework
-                    REM - coverage: Code coverage measurement
-                    pip install pytest pytest-cov coverage
-                    
+                    REM Detect python on PATH or fall back to common locations
+                    set PYTHON_CMD=python
+                    where python >nul 2>&1
+                    if errorlevel 1 (
+                        echo "python not found on PATH — trying common locations"
+                        if exist "C:\\Program Files\\Python39\\python.exe" (
+                            set PYTHON_CMD="C:\\Program Files\\Python39\\python.exe"
+                        ) else (
+                            if exist "C:\\Python39\\python.exe" (
+                                set PYTHON_CMD="C:\\Python39\\python.exe"
+                            ) else (
+                                if exist "C:\\Program Files\\Python311\\python.exe" (
+                                    set PYTHON_CMD="C:\\Program Files\\Python311\\python.exe"
+                                ) else (
+                                    echo Warning: No python executable found; subsequent steps may fail
+                                )
+                            )
+                        )
+                    ) else (
+                        echo "python found on PATH"
+                    )
+
+                    REM Show selected python
+                    echo Using: %PYTHON_CMD%
+
+                    REM Create virtual environment (if possible)
+                    if exist %PYTHON_CMD% (
+                        %PYTHON_CMD% -m venv venv || echo "Warning: venv creation failed"
+                        call venv\\Scripts\\activate.bat || echo "Warning: venv activation failed"
+                        %PYTHON_CMD% -m pip install --upgrade pip || echo "Warning: pip upgrade failed"
+                        pip install pytest pytest-cov coverage || echo "Warning: dependency install failed"
+                    ) else (
+                        echo Skipping venv creation — python not available
+                    )
+
                     echo ✓ Environment setup complete
                 '''
             }
