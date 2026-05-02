@@ -270,6 +270,25 @@ pipeline {
                 '''
             }
         }
+        
+        stage('Deploy') {
+            steps {
+                echo "========== DEPLOY STAGE =========="
+                bat '''
+                    call venv/Scripts/activate.bat
+
+                    REM Package artifacts
+                    if not exist dist\package mkdir dist\package
+                    powershell -Command "Compress-Archive -Path dist\* -DestinationPath dist\package\artifact.zip -Force"
+
+                    REM Simulate deployment by copying to deployment folder
+                    if not exist deployment mkdir deployment
+                    copy dist\package\artifact.zip deployment\ || echo "Copy failed"
+
+                    echo ✓ Deployment simulated: deployment\artifact.zip
+                '''
+            }
+        }
     }
     
     post {
