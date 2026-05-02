@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import argparse
 import html
+import csv
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Iterable
@@ -240,6 +241,7 @@ def index_html(reports: Iterable[SuiteReport], project: str, build: str) -> str:
   </table>
   <h2>Additional Artifacts</h2>
   <ul>
+    <li><a href="test-metrics.csv">Test Metrics CSV</a></li>
     <li><a href="coverage/index.html">Coverage HTML Report</a></li>
     <li><a href="unit-test-report.html">pytest-html Unit Report</a></li>
     <li><a href="integration-test-report.html">pytest-html Integration Report</a></li>
@@ -248,6 +250,37 @@ def index_html(reports: Iterable[SuiteReport], project: str, build: str) -> str:
 </body>
 </html>
 """
+
+
+def write_metrics_csv(reports: Iterable[SuiteReport], csv_path: Path) -> None:
+    with csv_path.open("w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(
+            [
+                "level",
+                "total",
+                "passed",
+                "failed",
+                "errors",
+                "skipped",
+                "duration_seconds",
+                "pass_rate_percent",
+            ]
+        )
+        for report in reports:
+            pass_rate = (report.passed / report.tests * 100) if report.tests else 0.0
+            writer.writerow(
+                [
+                    report.level,
+                    report.tests,
+                    report.passed,
+                    report.failures,
+                    report.errors,
+                    report.skipped,
+                    f"{report.duration:.3f}",
+                    f"{pass_rate:.2f}",
+                ]
+            )
 
 
 def main() -> int:
@@ -273,6 +306,7 @@ def main() -> int:
         index_html(reports, args.project, args.build),
         encoding="utf-8",
     )
+    write_metrics_csv(reports, results_dir / "test-metrics.csv")
     return 0
 
 

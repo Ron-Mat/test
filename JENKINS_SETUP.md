@@ -170,6 +170,36 @@ Pipeline execution → Test Result page shows:
 - Test execution time
 ```
 
+### Jenkins Graphical Test Trend
+
+Jenkins creates a built-in graph from JUnit XML results when the pipeline calls `junit(...)`.
+
+To view it:
+
+```
+1. Run the job at least 2-3 times so Jenkins has history.
+2. Open the job page, for example local-automotive-testing.
+3. Look for Test Result Trend on the project page.
+4. Open a build and click Test Result for package/class/test breakdown.
+5. Compare builds to see whether failures, skipped tests, and duration are improving or getting worse.
+```
+
+This project publishes three JUnit result files:
+
+```
+test-results/junit.xml                  # SWE4 unit tests
+test-results/integration-junit.xml      # SWE5 integration tests
+test-results/qualification-junit.xml    # SWE6 qualification tests
+```
+
+The `scripts/generate_ci_reports.py` script also creates:
+
+```
+test-results/test-metrics.csv
+```
+
+Use this CSV for optional custom graph practice with Jenkins plugins such as Plot Plugin or dashboard/reporting plugins. The built-in Jenkins graph does not need this CSV; it uses JUnit XML directly.
+
 ### Coverage Report
 ```
 Pipeline execution → Coverage Report tab shows:

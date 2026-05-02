@@ -275,6 +275,7 @@ pipeline {
                     echo   - Static SWE4 Summary: %TEST_RESULTS_DIR%/unit-summary.html
                     echo   - Static SWE5 Summary: %TEST_RESULTS_DIR%/integration-summary.html
                     echo   - Static SWE6 Summary: %TEST_RESULTS_DIR%/qualification-summary.html
+                    echo   - Metrics CSV: %TEST_RESULTS_DIR%/test-metrics.csv
                     echo.
                     echo ✓ All reports generated
                 '''
@@ -358,6 +359,8 @@ pipeline {
                 artifacts: "${env.TEST_RESULTS_DIR}/**/*, dist/**",
                 allowEmptyArchive: false
             )
+
+            echo "Jenkins Test Result Trend graph is generated from the published JUnit XML results after multiple builds."
 
             // Clean up workspace
             cleanWs(

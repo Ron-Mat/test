@@ -109,12 +109,33 @@ Expected Jenkins artifacts include:
 - `test-results/integration-test-report.html`
 - `test-results/qualification-test-report.html`
 - `test-results/coverage/index.html`
+- `test-results/test-metrics.csv`
 - `test-results/junit.xml`
 - `test-results/integration-junit.xml`
 - `test-results/qualification-junit.xml`
 - `dist/package/artifact.zip`
 
 The `*-summary.html` files are static Jenkins-friendly reports generated from JUnit XML. They are usually better for archived Jenkins viewing than pytest-html because they do not depend on JavaScript.
+
+## Jenkins Graphical Test Views
+
+Jenkins creates its own graphical test trend from the JUnit XML files published by the `junit(...)` steps in the Jenkinsfile.
+
+How to see it:
+
+1. Run the Jenkins job at least two or three times. A trend graph needs build history.
+2. Open the Jenkins job page, for example `local-automotive-testing`.
+3. Look for `Test Result Trend` on the job page.
+4. Open a specific build and select `Test Result`.
+5. Jenkins will show total tests, failures, skipped tests, duration, package/class breakdown, and historical trends.
+
+What feeds the Jenkins graph:
+
+- `test-results/junit.xml` for SWE4 unit tests
+- `test-results/integration-junit.xml` for SWE5 integration tests
+- `test-results/qualification-junit.xml` for SWE6 qualification tests
+
+The project also writes `test-results/test-metrics.csv`, which summarizes total, passed, failed, skipped, duration, and pass-rate data by SWE level. That file is useful for learning how custom charts can be built with optional Jenkins plugins such as Plot, Metrics, or dashboard plugins.
 
 ## Run Locally
 

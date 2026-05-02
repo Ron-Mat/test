@@ -202,6 +202,10 @@ A: It produces JUnit XML, Jenkins-friendly static HTML summaries, pytest-html re
 
 A: Jenkins understands JUnit XML as a standard test result format. Even when tests are written in Python, publishing JUnit XML lets Jenkins show test counts, failures, trends, and history.
 
+**Q: How do you create Jenkins graphical test charts from this project?**
+
+A: The Jenkinsfile calls `junit(...)` for the SWE4, SWE5, and SWE6 XML result files. Jenkins uses those XML files to create the built-in Test Result and Test Result Trend views. After multiple builds, the job page shows a graph of test count, failures, skipped tests, and history. This project also writes `test-metrics.csv` so optional plugins can create custom charts by SWE level.
+
 **Q: Why create HTML reports?**
 
 A: HTML reports are easier for humans to review. JUnit XML is useful for Jenkins parsing, while static HTML gives readable detail for engineers, leads, and release reviewers. In this project, the static summaries are generated from JUnit XML so Jenkins artifact viewing does not depend on pytest-html JavaScript.
