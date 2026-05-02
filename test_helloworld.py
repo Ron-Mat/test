@@ -116,11 +116,15 @@ class TestVehicleSpeedControl(unittest.TestCase):
         self.vehicle.accelerate(150)  # Current speed: 150
         self.vehicle.accelerate(100)  # Try to go 250, but max is 200
         self.assertLessEqual(
-            self.vehicle.current_speed, 
-            self.vehicle.max_speed, 
+            self.vehicle.current_speed,
+            self.vehicle.max_speed,
             "Speed should never exceed max_speed limit"
         )
-        self.assertEqual(self.vehicle.current_speed, 200, "Speed should be clamped to max_speed (200)")
+        self.assertEqual(
+            self.vehicle.current_speed,
+            200,
+            "Speed should be clamped to max_speed (200)"
+        )
 
     def test_incremental_acceleration_sequence(self):
         """
@@ -148,19 +152,23 @@ class TestVehicleDiagnostics(unittest.TestCase):
     Tests the diagnostic checking system that monitors vehicle health.
     Key Responsibility: "Knowledge and familiarity with ... Diagnostics"
     """
+
     def setUp(self):
         """Setup vehicle for diagnostic testing."""
         self.vehicle = VehicleController("TEST_DIAG_001")
         self.helper = TestHelper()
+
     def test_diagnostics_show_engine_off(self):
         """Test: Diagnostics correctly report engine status (off)."""
         diag = self.vehicle.run_diagnostics()
         self.assertEqual(diag["engine_status"], "OFF")
+
     def test_diagnostics_show_engine_on(self):
         """Test: Diagnostics correctly report engine status (on)."""
         self.vehicle.start_engine()
         diag = self.vehicle.run_diagnostics()
         self.assertEqual(diag["engine_status"], "OK")
+
     def test_diagnostics_speed_validity(self):
         """
         Test: Diagnostics verify that speed is within valid range.
@@ -171,7 +179,7 @@ class TestVehicleDiagnostics(unittest.TestCase):
         self.vehicle.accelerate(100)
         result = self.vehicle.run_diagnostics()
         self.assertTrue(
-            result["speed_valid"], 
+            result["speed_valid"],
             "Speed should be valid (within 0 to max_speed bounds)"
         )
 
@@ -184,10 +192,9 @@ class TestVehicleDiagnostics(unittest.TestCase):
         self.vehicle.add_fault_code("P0100")
         self.assertEqual(self.vehicle.run_diagnostics()["fault_count"], 1)
         self.assertFalse(
-            self.vehicle.run_diagnostics()["system_ready"], 
+            self.vehicle.run_diagnostics()["system_ready"],
             "System should not be ready with active faults"
         )
-
 
 
 class TestIntegrationScenarios(unittest.TestCase):
@@ -197,10 +204,12 @@ class TestIntegrationScenarios(unittest.TestCase):
     Key Responsibility: "Develop Test Plans ... to ensure coverage in terms of
     integration of software and virtualized hardware components."
     """
+
     def setUp(self):
         """Setup for integration testing."""
         self.helper = TestHelper()
         self.helper.start_test_timer()
+
     def tearDown(self):
         """Report on test timing."""
         elapsed = self.helper.end_test_timer()
@@ -257,7 +266,6 @@ class TestIntegrationScenarios(unittest.TestCase):
         self.assertTrue(start_result, "Engine should start after fault cleared")
 
 
-
 class TestPerformanceAndMetrics(unittest.TestCase):
     """
     Test Suite: Performance Metrics and Quality Measures
@@ -305,7 +313,6 @@ class TestPerformanceAndMetrics(unittest.TestCase):
         self.assertIn("PASSED", analysis)
 
 
-
 # Script to run tests with reporting
 if __name__ == "__main__":
     # Create test suite
@@ -322,4 +329,3 @@ if __name__ == "__main__":
     result = runner.run(suite)
     # Exit with appropriate code for CI/CD
     exit(0 if result.wasSuccessful() else 1)
-    

@@ -12,7 +12,6 @@ Key Responsibilities (from Job Description):
 """
 
 
-
 class VehicleController:
     """
     Simulates core automotive control system.
@@ -75,8 +74,6 @@ class VehicleController:
     def clear_faults(self) -> None:
         """Clear all active fault codes."""
         self.fault_codes.clear()
-
-
 
 # Example usage demonstrating the module
 if __name__ == "__main__":
