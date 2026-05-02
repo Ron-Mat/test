@@ -10,6 +10,7 @@
 # Extended testing framework with better reporting
 pytest==7.4.0
 pytest-cov==4.1.0
+pytest-html==4.1.1
 
 # Code coverage measurement
 coverage==7.2.0
@@ -19,7 +20,6 @@ pylint==2.17.0
 flake8==6.0.0
 
 # Optional: For additional testing features
-# pytest-html==3.2.0          # HTML test reports
 # pytest-timeout==2.1.0       # Timeout support for tests
 # pytest-xdist==3.3.1         # Parallel test execution
 

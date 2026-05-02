@@ -24,6 +24,7 @@ class TestHelper:
     - Test result tracking
     - Efficiency in test design (as mentioned in job description)
     """
+    __test__ = False
 
     def __init__(self):
         """Initialize test helper with result tracking."""
