@@ -75,6 +75,7 @@ class VehicleController:
         """Clear all active fault codes."""
         self.fault_codes.clear()
 
+
 # Example usage demonstrating the module
 if __name__ == "__main__":
     vehicle = VehicleController("VEHICLE_001")
