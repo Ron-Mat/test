@@ -1,37 +1,23 @@
 """
-
 Automotive Software Module - CI/CD Practice Project
-
 This module simulates core automotive control functions that would be tested
-
 in a real production environment. The functions demonstrate:
-
 - Vehicle speed control
-
 - Engine diagnostics
-
 - Safety system checks
-
 Key Responsibilities (from Job Description):
-
 - Develop reliable, testable functions that can be verified by test scripts
-
 - Implement helper functions for modular testing approach
-
 - Follow software development lifecycle best practices
-
 """
+
 
 
 class VehicleController:
     """
-
     Simulates core automotive control system.
-
     This class demonstrates the types of functions that would be tested
-
     in automotive quality assurance environments (HIL, SIL testing).
-
     """
     def __init__(self, vehicle_id: str, max_speed: int = 200):
         """Initialize vehicle controller with safety parameters."""
@@ -43,13 +29,9 @@ class VehicleController:
 
     def start_engine(self) -> bool:
         """
-
         Start the vehicle engine with safety checks.
-
         Returns:
-
             bool: True if engine started successfully, False otherwise
-
         """
         if len(self.fault_codes) > 0:
             return False  # Cannot start with active fault codes
@@ -58,17 +40,11 @@ class VehicleController:
 
     def accelerate(self, speed_increase: int) -> int:
         """
-
         Safely increase vehicle speed with boundary checks.
-
         Args:
-
             speed_increase: Amount to increase speed
-
         Returns:
-
             int: Current speed after acceleration (clamped to max_speed)
-
         """
         if not self.engine_on:
             return 0
@@ -77,17 +53,11 @@ class VehicleController:
 
     def run_diagnostics(self) -> dict:
         """
-
         Run diagnostic checks on vehicle systems.
-
         This simulates the kind of diagnostic testing mentioned in the job description
-
         (Diagnostics, HWIO, Power Management checks).
-
         Returns:
-
             dict: Status of various system checks
-
         """
         diagnostics = {
             "engine_status": "OK" if self.engine_on else "OFF",
