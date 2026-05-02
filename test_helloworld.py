@@ -186,11 +186,15 @@ class TestVehicleSpeedControl(unittest.TestCase):
 
         self.vehicle.accelerate(100)  # Try to go 250, but max is 200
 
-        self.assertLessEqual(self.vehicle.current_speed, self.vehicle.max_speed,
-                             "Speed should never exceed max_speed limit")
+        self.assertLessEqual(
+            self.vehicle.current_speed, self.vehicle.max_speed,
+            "Speed should never exceed max_speed limit"
+        )
 
-        self.assertEqual(self.vehicle.current_speed, 200,
-                         "Speed should be clamped to max_speed (200)")
+        self.assertEqual(
+            self.vehicle.current_speed, 200,
+            "Speed should be clamped to max_speed (200)"
+        )
 
     def test_incremental_acceleration_sequence(self):
 
@@ -285,8 +289,10 @@ class TestVehicleDiagnostics(unittest.TestCase):
 
         result = self.vehicle.run_diagnostics()
 
-        self.assertTrue(result["speed_valid"],
-                        "Speed should be valid (within 0 to max_speed bounds)")
+        self.assertTrue(
+            result["speed_valid"],
+            "Speed should be valid (within 0 to max_speed bounds)"
+        )
 
     def test_diagnostics_with_faults(self):
 
@@ -381,16 +387,11 @@ class TestIntegrationScenarios(unittest.TestCase):
 
         # Verify diagnostics
 
-        diag = vehicle.run_diagnostics()
-
-        self.assertTrue(diag["system_ready"])
+        self.assertTrue(vehicle.run_diagnostics()["system_ready"])
 
         self.helper.assert_true(
-
-            diag["system_ready"],
-
+            vehicle.run_diagnostics()["system_ready"],
             "System should be ready in normal scenario"
-
         )
 
     def test_fault_detection_scenario(self):
@@ -432,6 +433,7 @@ class TestIntegrationScenarios(unittest.TestCase):
         start_result = vehicle.start_engine()
 
         self.assertTrue(start_result, "Engine should start after fault cleared")
+
 
 class TestPerformanceAndMetrics(unittest.TestCase):
 
@@ -479,9 +481,10 @@ class TestPerformanceAndMetrics(unittest.TestCase):
 
         # Performance metric: Tests should run quickly (< 1 second)
 
-        self.assertLess(elapsed, 1.0,
-
-                        f"Test execution too slow: {elapsed:.3f}s (should be < 1.0s)")
+        self.assertLess(
+            elapsed, 1.0,
+            f"Test execution too slow: {elapsed:.3f}s (should be < 1.0s)"
+        )
 
     def test_result_analysis(self):
 
