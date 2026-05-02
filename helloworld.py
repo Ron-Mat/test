@@ -2,8 +2,6 @@
 
 Automotive Software Module - CI/CD Practice Project
 
-
-
 This module simulates core automotive control functions that would be tested
 
 in a real production environment. The functions demonstrate:
@@ -13,8 +11,6 @@ in a real production environment. The functions demonstrate:
 - Engine diagnostics
 
 - Safety system checks
-
-
 
 Key Responsibilities (from Job Description):
 
@@ -26,25 +22,17 @@ Key Responsibilities (from Job Description):
 
 """
 
-
-
-
-
 class VehicleController:
 
     """
 
     Simulates core automotive control system.
 
-    
-
     This class demonstrates the types of functions that would be tested
 
     in automotive quality assurance environments (HIL, SIL testing).
 
     """
-
-    
 
     def __init__(self, vehicle_id: str, max_speed: int = 200):
 
@@ -60,15 +48,11 @@ class VehicleController:
 
         self.fault_codes = []
 
-    
-
     def start_engine(self) -> bool:
 
         """
 
         Start the vehicle engine with safety checks.
-
-        
 
         Returns:
 
@@ -80,13 +64,9 @@ class VehicleController:
 
             return False  # Cannot start with active fault codes
 
-        
-
         self.engine_on = True
 
         return self.engine_on
-
-    
 
     def accelerate(self, speed_increase: int) -> int:
 
@@ -94,13 +74,9 @@ class VehicleController:
 
         Safely increase vehicle speed with boundary checks.
 
-        
-
         Args:
 
             speed_increase: Amount to increase speed
-
-            
 
         Returns:
 
@@ -112,13 +88,9 @@ class VehicleController:
 
             return 0
 
-        
-
         self.current_speed = min(self.current_speed + speed_increase, self.max_speed)
 
         return self.current_speed
-
-    
 
     def run_diagnostics(self) -> dict:
 
@@ -126,13 +98,9 @@ class VehicleController:
 
         Run diagnostic checks on vehicle systems.
 
-        
-
         This simulates the kind of diagnostic testing mentioned in the job description
 
         (Diagnostics, HWIO, Power Management checks).
-
-        
 
         Returns:
 
@@ -154,25 +122,17 @@ class VehicleController:
 
         return diagnostics
 
-    
-
     def add_fault_code(self, fault_code: str) -> None:
 
         """Add a fault code for diagnostic purposes."""
 
         self.fault_codes.append(fault_code)
 
-    
-
     def clear_faults(self) -> None:
 
         """Clear all active fault codes."""
 
         self.fault_codes.clear()
-
-
-
-
 
 # Example usage demonstrating the module
 
@@ -183,4 +143,3 @@ if __name__ == "__main__":
     print(f"Created vehicle: {vehicle.vehicle_id}")
 
     print(f"Initial diagnostics: {vehicle.run_diagnostics()}")
-

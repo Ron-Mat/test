@@ -2,19 +2,13 @@
 
 Test Helper Functions and Wrappers
 
-
-
 This module provides utility functions for testing automotive software.
-
-
 
 Key Responsibility (from Job Description):
 
-"Lead in how test scripts & Helper/Wrappers functions are designed to verify 
+"Lead in how test scripts & Helper/Wrappers functions are designed to verify
 
 key functional behaviors."
-
-
 
 These helper functions demonstrate:
 
@@ -28,25 +22,17 @@ These helper functions demonstrate:
 
 """
 
-
-
 import time
 
 from typing import Dict, Any
 
 from helloworld import VehicleController
 
-
-
-
-
 class TestHelper:
 
     """
 
     Helper class for setting up and executing automotive tests.
-
-    
 
     Demonstrates:
 
@@ -58,8 +44,6 @@ class TestHelper:
 
     """
 
-    
-
     def __init__(self):
 
         """Initialize test helper with result tracking."""
@@ -70,23 +54,17 @@ class TestHelper:
 
         self.test_start_time = None
 
-    
-
     def setup_vehicle(self, vehicle_id: str, max_speed: int = 200) -> VehicleController:
 
         """
 
         Setup fixture: Create a vehicle instance for testing.
 
-        
-
         Args:
 
             vehicle_id: Unique identifier for the test vehicle
 
             max_speed: Maximum speed for the vehicle (default 200 km/h)
-
-            
 
         Returns:
 
@@ -96,23 +74,17 @@ class TestHelper:
 
         return VehicleController(vehicle_id, max_speed)
 
-    
-
     def start_test_timer(self) -> None:
 
         """Start timing a test execution."""
 
         self.test_start_time = time.time()
 
-    
-
     def end_test_timer(self) -> float:
 
         """
 
         End timing and return elapsed time.
-
-        
 
         Returns:
 
@@ -128,19 +100,13 @@ class TestHelper:
 
         return 0
 
-    
-
     def assert_equals(self, actual: Any, expected: Any, test_name: str) -> bool:
 
         """
 
         Assertion helper: Check if values are equal.
 
-        
-
         Key Responsibility: "Analyze script results (e.g., AI triaging)"
-
-        
 
         Args:
 
@@ -149,8 +115,6 @@ class TestHelper:
             expected: Expected test result
 
             test_name: Name of the test for reporting
-
-            
 
         Returns:
 
@@ -174,8 +138,6 @@ class TestHelper:
 
         return passed
 
-    
-
     def assert_true(self, condition: bool, test_name: str) -> bool:
 
         """Assertion helper: Check if condition is True."""
@@ -192,23 +154,16 @@ class TestHelper:
 
         return condition
 
-    
-
-    def assert_in_range(self, value: float, min_val: float, max_val: float, 
-
-                       test_name: str) -> bool:
+    def assert_in_range(self, value: float, min_val: float, max_val: float,
+                        test_name: str) -> bool:
 
         """
 
         Assertion helper: Check if value is within acceptable range.
 
-        
-
         This is important for automotive testing where values like speed,
 
         temperature, and voltages must stay within safe bounds.
-
-        
 
         Args:
 
@@ -219,8 +174,6 @@ class TestHelper:
             max_val: Maximum acceptable value
 
             test_name: Name of the test
-
-            
 
         Returns:
 
@@ -244,21 +197,15 @@ class TestHelper:
 
         return passed
 
-    
-
     def get_test_summary(self) -> Dict[str, Any]:
 
         """
 
         Generate test execution summary.
 
-        
-
-        Key Responsibility: "Manage department-wide report-outs such as 
+        Key Responsibility: "Manage department-wide report-outs such as
 
         script readiness timing, test execution results"
-
-        
 
         Returns:
 
@@ -271,8 +218,6 @@ class TestHelper:
         passed_tests = sum(1 for t in self.test_results if t.get("passed"))
 
         failed_tests = total_tests - passed_tests
-
-        
 
         return {
 
@@ -290,8 +235,6 @@ class TestHelper:
 
         }
 
-    
-
     def reset_results(self) -> None:
 
         """Reset test results for next test run."""
@@ -302,29 +245,19 @@ class TestHelper:
 
         self.test_start_time = None
 
-
-
-
-
 def analyze_test_results(summary: Dict[str, Any]) -> str:
 
     """
 
     Analyze test results and provide insights.
 
-    
-
     This function demonstrates the analytical skills required:
 
     "Strong analytical and problem-solving skills"
 
-    
-
     Args:
 
         summary: Test summary dictionary
-
-        
 
     Returns:
 
@@ -335,8 +268,6 @@ def analyze_test_results(summary: Dict[str, Any]) -> str:
     failed = summary.get("failed", 0)
 
     total = summary.get("total_tests", 0)
-
-    
 
     if failed == 0:
 
@@ -350,31 +281,21 @@ def analyze_test_results(summary: Dict[str, Any]) -> str:
 
         return "✗ Critical failures - Fix required before proceeding"
 
-
-
-
-
 def setup_automotive_test_scenario(scenario_type: str) -> Dict[str, Any]:
 
     """
 
     Setup predefined test scenarios for automotive systems.
 
-    
+    Key Responsibility: "Develop Test Plans with inputs from the simulation
 
-    Key Responsibility: "Develop Test Plans with inputs from the simulation 
-
-    community to ensure coverage in terms of integration of software and 
+    community to ensure coverage in terms of integration of software and
 
     virtualized hardware components."
-
-    
 
     Args:
 
         scenario_type: Type of test scenario (e.g., 'normal', 'fault', 'edge_case')
-
-        
 
     Returns:
 
@@ -422,7 +343,4 @@ def setup_automotive_test_scenario(scenario_type: str) -> Dict[str, Any]:
 
     }
 
-    
-
     return scenarios.get(scenario_type, scenarios["normal"])
-
