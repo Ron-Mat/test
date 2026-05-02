@@ -166,6 +166,44 @@ pipeline {
                 '''
             }
         }
+
+        stage('Integration Tests (SWE5)') {
+            steps {
+                echo "========== INTEGRATION TESTS (SWE5) =========="
+                bat '''
+                    call venv/Scripts/activate.bat
+
+                    echo Running integration tests...
+                    pytest test_integration.py -q --junitxml=%TEST_RESULTS_DIR%/integration-junit.xml || echo "Integration tests failed"
+
+                    echo Integration tests complete
+                '''
+            }
+            post {
+                always {
+                    junit testResults: '${TEST_RESULTS_DIR}/integration-junit.xml', allowEmptyResults: true
+                }
+            }
+        }
+
+        stage('Qualification Tests (SWE6)') {
+            steps {
+                echo "========== QUALIFICATION TESTS (SWE6) =========="
+                bat '''
+                    call venv/Scripts/activate.bat
+
+                    echo Running qualification tests...
+                    pytest test_qualification.py -q --junitxml=%TEST_RESULTS_DIR%/qualification-junit.xml || echo "Qualification tests failed"
+
+                    echo Qualification tests complete
+                '''
+            }
+            post {
+                always {
+                    junit testResults: '${TEST_RESULTS_DIR}/qualification-junit.xml', allowEmptyResults: true
+                }
+            }
+        }
         
         stage('Code Quality Analysis') {
             steps {
